@@ -38,5 +38,9 @@ public class RegistrodeMesa {
         for (Platos platos2 : platos) {
             System.out.println(platos2);
         }
+
+        Consultas.MesasDisponibles(numMesa, mesas);
+
+        scanner.close();
     }
 }
