@@ -20,5 +20,23 @@ public class RegistrodeMesa {
                 mesas[i]=new Mesa(i+1, 4);
             }
         }
+        for (Mesa mesa : mesas) {
+            System.out.println(mesa);
+        }
+
+        System.out.println("Ingrese la cantidad de platos disponibles: ");
+        int numPlatos= scanner.nextInt();
+        Platos[] platos= new Platos[numPlatos];
+
+        for (int i = 0; i < numPlatos; i++) {
+            System.out.println("Ingresar nombre del plato: ");
+            String name= scanner.next();
+            System.out.println("Ingresar precio del plato: ");
+            double price= scanner.nextDouble();
+            platos[i]= new Platos(i+1, name  , price);
+        }
+        for (Platos platos2 : platos) {
+            System.out.println(platos2);
+        }
     }
 }

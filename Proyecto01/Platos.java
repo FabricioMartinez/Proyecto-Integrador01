@@ -2,9 +2,9 @@ package Proyecto01;
 public class Platos{
     private int codigoPlato;
     private String descripcion;
-    private float precio;
+    private double precio;
 
-    public Platos(int codigoPlato, String descripcion, float precio){
+    public Platos(int codigoPlato, String descripcion, double precio){
         this.codigoPlato=codigoPlato;
         this.descripcion=descripcion;
         this.precio=precio;
@@ -32,6 +32,6 @@ public class Platos{
 
     @Override
     public String toString(){
-        return "Plato [codigo="+codigoPlato+",  descripcion="+descripcion+", precio= "+precio+"]";
+        return "Plato [codigo= "+codigoPlato+",  descripcion= "+descripcion+", precio= $"+precio+"]";
     }
 }
