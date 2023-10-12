@@ -23,7 +23,7 @@ public class Platos{
         this.descripcion = descripcion;
     }
 
-    public float getPrecio() {
+    public double getPrecio() {
         return precio;
     }
     public void setPrecio(float precio) {
