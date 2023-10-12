@@ -5,10 +5,11 @@ import java.util.Scanner;
 
 public class RegistrodeMesa {
     public static void main(String[] args) {
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingresar el numero de mesas del restaurante: ");
         int numMesa= scanner.nextInt();
+        scanner.nextLine();
         Mesa[] mesas= new Mesa[numMesa];
         int pedidoActual=1;
 
