@@ -1,7 +1,11 @@
 package Proyecto01;
+
+import java.util.Scanner;
+
 public class ocuparMesa {
 
 static void ocuparMesa(int numMesa, Mesa[] mesas) {
+    Scanner scanner = new Scanner(System.in);
     System.out.println("Ingrese el número de comensales: ");
     int numComensales = scanner.nextInt();
     System.out.println("Mesa disponible para " + numComensales + " personas:");
