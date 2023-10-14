@@ -38,6 +38,8 @@ public class RegistrodeMesa {
             System.out.println(platos2);
         }
         
+        ocuparMesa.OcuparMesa(numMesa, mesas);
+
         System.out.println("Ingrese el numero actual de clientes en espera.");
         int clientesEnEspera = scanner.nextInt();
         scanner.nextLine();
