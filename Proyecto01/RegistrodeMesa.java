@@ -38,6 +38,11 @@ public class RegistrodeMesa {
         for (Platos platos2 : platos) {
             System.out.println(platos2);
         }
+        
+        /*System.out.println("Ingrese el numero actual de clientes en espera.");
+        int clientesEnEspera = scanner.nextInt();
+        scanner.nextLine();*/
+
 
         Consultas.MesasDisponibles(numMesa, mesas);
 
