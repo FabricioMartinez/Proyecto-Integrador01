@@ -37,5 +37,8 @@ public class Consultas {
             }
         }   
     }
-
+    static void consultaDeClientes(Clientes clientes){
+        System.out.println(clientes);
+        clientes.CantidadTotal();
+    }
 }

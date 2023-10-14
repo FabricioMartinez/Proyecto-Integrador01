@@ -13,6 +13,9 @@ public class Mesa {
         this.servicio="ninguno";
         this.comensales=0;
     }
+    public Mesa(){
+        
+    }
 
     public int getCapacidad() {
         return capacidad;

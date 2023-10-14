@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class RegistrodeMesa {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
         System.out.println("Ingresar el numero de mesas del restaurante: ");
         int numMesa= scanner.nextInt();
         scanner.nextLine();
@@ -39,10 +38,16 @@ public class RegistrodeMesa {
             System.out.println(platos2);
         }
         
-        /*System.out.println("Ingrese el numero actual de clientes en espera.");
+        System.out.println("Ingrese el numero actual de clientes en espera.");
         int clientesEnEspera = scanner.nextInt();
-        scanner.nextLine();*/
-
+        scanner.nextLine();
+        System.out.println("Ingrese el numero actual de clientes atendidos.");
+        int clientesAtendidos = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingrese el numero actual de clientes servidos.");
+        int clientesServidos = scanner.nextInt();
+        scanner.nextLine();
+        Clientes clientes = new Clientes(clientesEnEspera, clientesAtendidos, clientesServidos);
 
         Consultas.MesasDisponibles(numMesa, mesas);
 
