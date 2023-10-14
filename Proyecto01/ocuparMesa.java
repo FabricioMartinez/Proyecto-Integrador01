@@ -22,6 +22,6 @@ public class ocuparMesa {
             }
             }else{
                 System.out.println("No hay mesas disponibles.");
-            }  
+            }
+        }  
     }
-}
