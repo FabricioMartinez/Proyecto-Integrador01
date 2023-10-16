@@ -2,7 +2,7 @@ package Proyecto01;
 
 import java.util.Scanner;
 
-public class ocuparMesa {
+public class ServicioMesas {
     static Scanner scanner = new Scanner(System.in);
     static void OcuparMesa(int numMesa, Mesa[] mesas) {
         System.out.println("Ingrese el número de comensales: ");
@@ -24,4 +24,15 @@ public class ocuparMesa {
                 System.out.println("No hay mesas disponibles.");
             }
         }  
+    
+        static void atencionMesas(int numMesa, Mesa[] mesas){
+        for (int i=0; i<numMesa; i++){
+            if (mesas[i].getEstado().equals("espera")){
+                /*GestionPedidos.altaPedidos(mesas[i]);
+                mesas[i].setEstado("atendida");*/
+            }
+        }
     }
+    }
+
+    
