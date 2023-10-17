@@ -3,6 +3,7 @@ package Proyecto01;
 import java.util.Scanner;
 import java.util.List;
 import java.util.Queue;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -18,6 +19,7 @@ public class Restaurante {
     private int totalAtendidos;
     private int totalServidos;
     private int numMesa;
+    private int pedidoActual = 1;
 
     public Restaurante() {
         mesas = new ArrayList<>();
@@ -68,13 +70,14 @@ public class Restaurante {
                     restaurante.consultaDeClientes();
                     break;
                 case 6:
-                    // restaurante.altaDePedido();
+                    restaurante.altaDePedido();
                     break;
                 case 10:
                     elegir= false;
                     break;
             }
         }
+        scanner.close();
     }
 
     public void consultarMesaDisponibles() {
@@ -114,6 +117,7 @@ public class Restaurante {
         if (!mesaEncontrada) {
             System.out.println("Mesa libre");
         }
+        scanner.close();
     }
     
     public void consultaDeClientes() {
@@ -188,98 +192,113 @@ public class Restaurante {
         clientes.setTotalAtendidos(totalAtendidos);
         clientes.setTotalServidos(totalServidos);
         consultarMesaDisponibles();
+
+        scanner.close();
     }
 
     public int consultarTotal() {
         return totalEspera + totalAtendidos + totalServidos;
     }
 
-    // public void OcuparMesa(int numMesa, Mesa[] mesas) {
-    //     Scanner scanner = new Scanner(System.in);
-    //         System.out.println("Ingrese el número de comensales: ");
-    //         int numComensales = scanner.nextInt();
-    //         scanner.nextLine();
-    //         if (Consultas.MesasDisponibles(numMesa, mesas) != 0){
-    //             System.out.println("¿Cuál mesa desea ocupar?");
-    //             int elegirMesa = scanner.nextInt();
-    //             scanner.nextLine();
-    //             if (mesas[elegirMesa].getCapacidad() >= numComensales && mesas[elegirMesa].getEstado().equals("libre")){
-    //                 mesas[elegirMesa].setEstado("ocupada");
-    //                 mesas[elegirMesa].setServicio("espera");
-    //                 mesas[elegirMesa].setComensales(numComensales);
-    //                 System.out.println("Ahora la mesa "+ mesas[elegirMesa].getNumMesa()+ " esta ocupada y esperando a ser atendida.");
-    //             }else{
-    //                 System.out.println("Esa mesa no esta disponible.");
-    //             }
-    //             }else{
-    //                 System.out.println("No hay mesas disponibles.");
-    //             }
-    //         }  
+    public void OcuparMesa(int numMesa, Mesa[] mesas) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el número de comensales: ");
+        int numComensales = scanner.nextInt();
+        scanner.nextLine();
+        if (Consultas.MesasDisponibles(numMesa, mesas) != 0){
+            System.out.println("¿Cuál mesa desea ocupar?");
+            int elegirMesa = scanner.nextInt();
+            scanner.nextLine();
+            if (mesas[elegirMesa].getCapacidad() >= numComensales && mesas[elegirMesa].getEstado().equals("libre")){
+                mesas[elegirMesa].setEstado("ocupada");
+                mesas[elegirMesa].setServicio("espera");
+                mesas[elegirMesa].setComensales(numComensales);
+                System.out.println("Ahora la mesa "+ mesas[elegirMesa].getNumMesa()+ " esta ocupada y esperando a ser atendida.");
+                }else{
+                    System.out.println("Esa mesa no esta disponible.");
+                }
+                }else{
+                    System.out.println("No hay mesas disponibles.");
+                }
+        scanner.close();
+    }  
         
-    //         static void atencionMesas(int numMesa, Mesa[] mesas){
-    //         for (int i=0; i<numMesa; i++){
-    //             if (mesas[i].getEstado().equals("espera")){
-    //                 /*GestionPedidos.altaPedidos(mesas[i]);
-    //                 mesas[i].setEstado("atendida");*/
-    //             }
-    //         }
-    // }
+    public static void atencionMesas(int numMesa, Mesa[] mesas){
+        for (int i=0; i<numMesa; i++){
+            if (mesas[i].getEstado().equals("espera")){
+                restaurante.altaDePedido();
+                mesas[i].setEstado("atendida");
+            }
+        }
+    }
     
-    // public void altaDePedido() {
-    //         Scanner scanner = new Scanner(System.in);
-    //         List<Mesa> mesasOcupadas = new ArrayList<>();
-    //         for (Mesa mesa : mesas) {
-    //             if (mesa.getEstado().equals("ocupada")) {
-    //                 mesasOcupadas.add(mesa);
-    //             }
-    //         }
+
+    public void altaDePedido() {
+            Scanner scanner = new Scanner(System.in);
+            List<Mesa> mesasOcupadas = new ArrayList<>();
+            for (Mesa mesa : mesas) {
+                if (mesa.getEstado().equals("ocupada")) {
+                    mesasOcupadas.add(mesa);
+                }
+            }
         
-    //         if (mesasOcupadas.isEmpty()) {
-    //             System.out.println("No hay mesas ocupadas para tomar pedidos.");
-    //             return;
-    //         }
+            if (mesasOcupadas.isEmpty()) {
+                System.out.println("No hay mesas ocupadas para tomar pedidos.");
+            }
         
-    //         // Mostrar el menú de platos
-    //         System.out.println("Menú de Platos:");
-    //         for (Platos plato : platos) {
-    //             System.out.println(plato.getCodigoPlato() + ". " + plato.getDescripcion() + " - Precio: " + plato.getPrecio());
-    //         }
+             // Mostrar el menú de platos
+            System.out.println("Menú de Platos:");
+            for (Platos plato : platos) {
+                System.out.println(plato.getCodigoPlato() + ". " + plato.getDescripcion() + " - Precio: " + plato.getPrecio());
+            }
         
-    //         // Obtener el número de mesa
-    //         System.out.println("Ingrese el número de mesa para el pedido:");
-    //         int numeroMesa = scanner.nextInt();
-    //         scanner.nextLine();
+            // Obtener el número de mesa
+            System.out.println("Ingrese el número de mesa para el pedido:");
+            int numeroMesa = scanner.nextInt();
+            scanner.nextLine();
         
-    //         // Verificar si el número de mesa es válido
-    //         boolean mesaValida = false;
-    //         for (Mesa mesa : mesasOcupadas) {
-    //             if (mesa.getNumMesa() == numeroMesa) {
-    //                 mesaValida = true;
-    //                 break;
-    //             }
-    //         }
+            // Verificar si el número de mesa es válido
+            boolean mesaValida = false;
+            for (Mesa mesa : mesasOcupadas) {
+                if (mesa.getNumMesa() == numeroMesa) {
+                    mesaValida = true;
+                    break;
+                }
+            }
         
-    //         if (!mesaValida) {
-    //             System.out.println("El número de mesa no es válido o no está ocupado.");
-    //             return;
-    //         }
+            if (!mesaValida) {
+                System.out.println("El número de mesa no es válido o no está ocupado.");
+            }
         
-    //         // Crear el pedido
-    //         Pedido nuevoPedido = new Pedido(platos, numeroMesa, "libre");
+            // Crear la lista de los platos a elegir
+            ArrayList<String> ordenDePlatos = new ArrayList<String>();
+
+            // Elegir platos para el pedido
+            System.out.println("Seleccione hasta 4 platos ingresando sus números (0 para finalizar):");
+            int platoSeleccionado;
+            int contadorPlatos = 0;
         
-    //         // Elegir platos para el pedido
-    //         System.out.println("Seleccione hasta 4 platos ingresando sus números (0 para finalizar):");
-    //         int platoSeleccionado;
-    //         int contadorPlatos = 0;
-        
-    //         while (contadorPlatos < 4) {
-    //             platoSeleccionado = scanner.nextInt();
-    //             scanner.nextLine();
-    //             if (platoSeleccionado == 0) {
-    //                 break;
-    //             }
-    //         }
-    // }
+            while (contadorPlatos < 5) {
+                platoSeleccionado = scanner.nextInt();
+                scanner.nextLine();
+                if (platoSeleccionado == 0) {
+                    break;
+                }else{
+                    for (Platos plato : platos){
+                    if (plato.getCodigoPlato() == platoSeleccionado){
+                        ordenDePlatos.add(plato.getDescripcion());
+                        break;
+                    }
+                contadorPlatos++;
+                }
+                
+                }
+            
+            // Crea el pedido   
+            Pedido nuevoPedido = new Pedido(pedidoActual, numMesa, ordenDePlatos, "espera");
+            }
+            scanner.close();
+    }
 
 }
 

@@ -8,13 +8,11 @@ public class Pedido {
     private List<String> platos;
     private String estado;
 
-    private static int numeroPedidoCorrelativo = 1;
-    private int numerodeMesa;
 
-    public Pedido(List<String> platos, int numerodeMesa, String estado) {
-        this.numeroPedido = numeroPedidoCorrelativo++;
+    public Pedido(int numeroPedido, int numMesa, List<String> platos, String estado) {
+        this.numeroPedido = numeroPedido;
+        this.numMesa = numMesa;
         this.platos = platos;
-        this.numerodeMesa = numerodeMesa;
         this.estado = estado;
     }
 
@@ -50,19 +48,6 @@ public class Pedido {
         this.platos = platos;
     }
 
-    public static int getNumeroPedidoCorrelativo() {
-        return numeroPedidoCorrelativo;
-    }
 
-    public static void setNumeroPedidoCorrelativo(int numeroPedidoCorrelativo) {
-        Pedido.numeroPedidoCorrelativo = numeroPedidoCorrelativo;
-    }
 
-    public int getNumerodeMesa() {
-        return numerodeMesa;
-    }
-
-    public void setNumerodeMesa(int numerodeMesa) {
-        this.numerodeMesa = numerodeMesa;
-    }
 }
