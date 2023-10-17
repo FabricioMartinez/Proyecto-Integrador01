@@ -1,7 +1,9 @@
 package Proyecto01;
 
 import java.util.Scanner;
-
+import java.util.Stack;
+import java.util.Queue;
+import java.util.ArrayDeque;
 
 public class RegistrodeMesa {
     public static void main(String[] args) {
@@ -10,6 +12,9 @@ public class RegistrodeMesa {
         int numMesa= scanner.nextInt();
         scanner.nextLine();
         Mesa[] mesas= new Mesa[numMesa];
+        Queue<Pedido> pedidosEnEspera = new Queue<>();
+        Queue<Pedido> pedidosPreparacion = new Queue<>();
+        Stack<Boleta> pagosRecibidos = new Stack<>();
         int pedidoActual=1;
 
         for (int i = 0; i < numMesa; i++) {
@@ -37,8 +42,7 @@ public class RegistrodeMesa {
         for (Platos platos2 : platos) {
             System.out.println(platos2);
         }
-        
-        ocuparMesa.OcuparMesa(numMesa, mesas);
+
 
         System.out.println("Ingrese el numero actual de clientes en espera.");
         int clientesEnEspera = scanner.nextInt();
@@ -51,7 +55,7 @@ public class RegistrodeMesa {
         scanner.nextLine();
         Clientes clientes = new Clientes(clientesEnEspera, clientesAtendidos, clientesServidos);
 
-        Consultas.MesasDisponibles(numMesa, mesas);
+        
 
         scanner.close();
     }

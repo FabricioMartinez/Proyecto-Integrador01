@@ -28,8 +28,8 @@ public class ServicioMesas {
         static void atencionMesas(int numMesa, Mesa[] mesas){
         for (int i=0; i<numMesa; i++){
             if (mesas[i].getEstado().equals("espera")){
-                /*GestionPedidos.altaPedidos(mesas[i]);
-                mesas[i].setEstado("atendida");*/
+                //GestionPedidos.altaPedidos(mesas[i]);
+                mesas[i].setEstado("atendida");
             }
         }
     }
