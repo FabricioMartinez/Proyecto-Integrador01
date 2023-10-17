@@ -226,7 +226,7 @@ public class Restaurante {
     public static void atencionMesas(int numMesa, Mesa[] mesas){
         for (int i=0; i<numMesa; i++){
             if (mesas[i].getEstado().equals("espera")){
-                restaurante.altaDePedido();
+                //restaurante.altaDePedido();
                 mesas[i].setEstado("atendida");
             }
         }
