@@ -223,10 +223,11 @@ public class Restaurante {
         scanner.close();
     }  
         
-    public static void atencionMesas(int numMesa, Mesa[] mesas){
+    static void atencionMesas(int numMesa, Mesa[] mesas){
         for (int i=0; i<numMesa; i++){
             if (mesas[i].getEstado().equals("espera")){
-                //restaurante.altaDePedido();
+                // Aca esta el error
+                restaurante.altaDePedido();
                 mesas[i].setEstado("atendida");
             }
         }
