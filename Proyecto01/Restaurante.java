@@ -64,8 +64,8 @@ public class Restaurante {
             System.out.println("4- Consultar por clientes.");
             System.out.println("5- Ocupar una mesa.");
             System.out.println("6- Atencion de mesas.");
-            System.out.println("7- Entrega de pedido");
-            System.out.println("8- Preparacion de pedido");
+            System.out.println("7- Preparacioin de pedido");
+            System.out.println("8- Entrega de pedido");
             System.out.println("9- Pago de consumo");
             System.out.println("10- Control de ingresos de la jornada");
             System.out.println("11- Salir del menú");
@@ -97,7 +97,9 @@ public class Restaurante {
                     }
                     break;
                 case 7:
-                    // restaurante.prepararPedido();
+                    restaurante.prepararPedidos(pedidosEnEspera, pedidosPreparacion);
+                    break;
+                    
                     break;
                 case 11:
                     elegir = false;
@@ -251,3 +253,18 @@ public class Restaurante {
         scanner.close();
     }
 }
+
+
+//prepararPedidos
+public void prepararPedidos(Queue<Pedido> pedidosEnEspera, Queue<Pedido> pedidosPreparacion) {
+    int maxPedidosAProcesar = Math.min(5, pedidosEnEspera.size());
+
+    for (int i = 0; i < maxPedidosAProcesar; i++) {
+        Pedido pedido = pedidosEnEspera.poll(); 
+        pedido.setEstado("Preparando");
+        pedidosPreparacion.offer(pedido); 
+    }
+
+    System.out.println("Se han preparado " + maxPedidosAProcesar + " pedidos.");
+}
+
