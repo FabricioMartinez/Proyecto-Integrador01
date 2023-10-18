@@ -63,7 +63,7 @@ public class Restaurante {
             System.out.println("4- Consultar por clientes.");
             System.out.println("5- Ocupar una mesa.");
             System.out.println("6- Atencion de mesas.");
-            System.out.println("7- Preparacioin de pedido");
+            System.out.println("7- Preparacion de pedido");
             System.out.println("8- Entrega de pedido");
             System.out.println("9- Pago de consumo");
             System.out.println("10- Control de ingresos de la jornada");
@@ -336,6 +336,6 @@ public class Restaurante {
             Boleta boleta = pagosRecibidos.pop();
             gananciaTotal += boleta.getMontoAPagar();
         }
-        System.out.println("Total de ganancias del dia: "+ gananciaTotal);
+        System.out.println("Total de ganancias del dia: $"+ gananciaTotal);
     }
 }
