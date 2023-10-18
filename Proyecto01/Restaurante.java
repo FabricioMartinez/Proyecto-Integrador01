@@ -67,7 +67,8 @@ public class Restaurante {
             System.out.println("8- Entrega de pedido");
             System.out.println("9- Pago de consumo");
             System.out.println("10- Control de ingresos de la jornada");
-            System.out.println("11- Salir del menú");
+            System.out.println("11- Actualizar clientes.");
+            System.out.println("12- Salir del menú");
             System.out.println("Elegir una opción:");
             int opcion = scanner.nextInt();
             scanner.nextLine();
@@ -108,6 +109,9 @@ public class Restaurante {
                     restaurante.controlIngresos(pagosRecibidos);
                     break;
                 case 11:
+                    restaurante.actualizarClientes(clientes);
+                    break;
+                case 12:
                     elegir = false;
                     break;
             }
@@ -166,6 +170,21 @@ public class Restaurante {
 
     public int consultarTotalClientes(Clientes clientes) {
         return clientes.getTotalEspera() + clientes.getTotalAtendidos() + clientes.getTotalServidos();
+    }
+    public void actualizarClientes(Clientes clientes){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el numero actual de clientes en espera.");
+        int clientesEnEspera = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingrese el numero actual de clientes atendidos.");
+        int clientesAtendidos = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Ingrese el numero actual de clientes servidos.");
+        int clientesServidos = scanner.nextInt();
+        scanner.nextLine();
+        clientes.setTotalEspera(clientesEnEspera);
+        clientes.setTotalAtendidos(clientesAtendidos);
+        clientes.setTotalServidos(clientesServidos);
     }
 
     public void OcuparMesa(int numMesa, Mesa[] mesas) {
@@ -264,7 +283,7 @@ public class Restaurante {
     public void entregarPedidos(Mesa[] mesas, Queue<Pedido> pedidosPreparacion, ArrayList<Pedido> pedidosPendientesPagos){
         Pedido pedido = pedidosPreparacion.poll();
         pedido.setEstado("servido");
-        mesas[pedido.getNumMesa()].setServicio("servida");
+        mesas[pedido.getNumMesa() - 1].setServicio("servida");
         pedidosPendientesPagos.add(pedido);
         System.out.println("Se ha entregado el pedido de la mesa "+ pedido.getNumMesa());
     }
@@ -281,13 +300,14 @@ public class Restaurante {
 
         for (Mesa mesa : mesas) {
             if (mesa.getServicio().equals("servida")) {
-                System.out.println("Mesa " + mesa.getNumMesa());
+                System.out.println("Mesa "+ mesa.getNumMesa());
             }
         }
 
         System.out.println("Ingrese el número de mesa para realizar el pago:");
         int numeroMesa = scanner.nextInt();
         scanner.nextLine();
+        System.out.println(numeroMesa);
         boolean mesaEncontrada = false;
 
         for (Pedido pedido : pedidosPendientesPagos) {
