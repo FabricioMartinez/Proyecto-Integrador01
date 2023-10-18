@@ -103,6 +103,7 @@ public class Restaurante {
                     break;
                 case 9:
                     restaurante.pagoDeConsumo(mesas, pagosRecibidos, pedidosPendientesPago, platos);
+                    break;
                 case 10:
                     restaurante.controlIngresos(pagosRecibidos);
                     break;
