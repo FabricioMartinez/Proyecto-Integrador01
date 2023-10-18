@@ -278,6 +278,9 @@ public class Restaurante {
 }
 
 
+//PAGO DE CONSUMO
+
+
 public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<Pedido> pedidosPendientesPagos) {
     Scanner scanner = new Scanner(System.in);
 
@@ -320,4 +323,16 @@ public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<
         System.out.println("Mesa no encontrada o no tiene servicio 'servida'.");
     }
     scanner.close();
+}
+
+private double calcularMontoAPagar(List<String> platosPedido, Platos[] platos) {
+    double montoAPagar = 0;
+    for (String platoPedido : platosPedido) {
+        for (Platos plato : platos) {
+            if (plato.getDescripcion().equals(platoPedido)) {
+                montoAPagar += plato.getPrecio();
+            }
+        }
+    }
+    return montoAPagar;
 }
