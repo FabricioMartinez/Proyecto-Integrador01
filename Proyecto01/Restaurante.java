@@ -223,10 +223,10 @@ public class Restaurante {
         scanner.close();
     }  
         
-    static void atencionMesas(int numMesa, Mesa[] mesas){
-        for (int i=0; i<numMesa; i++){
-            if (mesas[i].getEstado().equals("espera")){
-                // Aca esta el error
+    // Tomar una instancia de restaurante
+    static void atencionMesas(Restaurante restaurante, int numMesas, Mesa[] mesas) {
+        for (int i = 0; i < numMesas; i++) {
+            if (mesas[i].getEstado().equals("espera")) {
                 restaurante.altaDePedido();
                 mesas[i].setEstado("atendida");
             }
