@@ -3,14 +3,14 @@ package Proyecto01;
 public class Boleta {
     private int numBoleta;
     private int numPedido;
-    private int montoAPagar;
+    private double montoAPagar;
 
     public Boleta(){
 
     }
     
 
-    public Boleta(int numBoleta, int numPedido, int montoAPagar) {
+    public Boleta(int numBoleta, int numPedido, double montoAPagar) {
         this.numBoleta = numBoleta;
         this.numPedido = numPedido;
         this.montoAPagar = montoAPagar;
@@ -33,11 +33,11 @@ public class Boleta {
         this.numPedido = numPedido;
     }
 
-    public int getMontoAPagar() {
+    public double getMontoAPagar() {
         return montoAPagar;
     }
 
-    public void setMontoAPagar(int montoAPagar) {
+    public void setMontoAPagar(double montoAPagar) {
         this.montoAPagar = montoAPagar;
     }
 

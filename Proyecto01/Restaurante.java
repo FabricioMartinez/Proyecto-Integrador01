@@ -103,6 +103,10 @@ public class Restaurante {
                 case 8:
                     restaurante.entregarPedidos(mesas, pedidosPreparacion, pedidosPendientesPago);
                     break;
+                case 9:
+                    restaurante.pagoDeConsumo(mesas, pagosRecibidos, pedidosPendientesPago, platos);
+                case 10:
+                    restaurante.controlIngresos(pagosRecibidos);
                 case 11:
                     elegir = false;
                     break;
@@ -275,64 +279,74 @@ public class Restaurante {
         mesas[pedido.getNumMesa()].setServicio("servida");
         pedidosPendientesPagos.add(pedido);
     }
-}
+
 
 
 //PAGO DE CONSUMO
 
 
-public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<Pedido> pedidosPendientesPagos) {
-    Scanner scanner = new Scanner(System.in);
+    public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<Pedido> pedidosPendientesPagos, Platos[] platos) {
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Mesas para realizar el pago:");
+        System.out.println("Mesas para realizar el pago:");
 
-    for (Mesa mesa : mesas) {
-        if (mesa.getServicio().equals("servida")) {
-            System.out.println("Mesa " + mesa.getNumMesa());
-        }
-    }
-
-    System.out.println("Ingrese el número de mesa para realizar el pago:");
-    int numeroMesa = scanner.nextInt();
-    scanner.nextLine();
-    boolean mesaEncontrada = false;
-
-    for (Pedido pedido : pedidosPendientesPagos) {
-        if (pedido.getNumMesa() == numeroMesa) {
-            mesaEncontrada = true;
-            double montoAPagar = calcularMontoAPagar(pedido.getPlatos(), platos);
-            Boleta boleta = new Boleta(pedido.getNumeroPedido(), numeroMesa, montoAPagar);
-            pagosRecibidos.push(boleta);
-            System.out.println("Monto a pagar por la mesa " + numeroMesa + ": $" + montoAPagar);
-            System.out.println("Ingrese el monto recibido: $");
-            double montoRecibido = scanner.nextDouble();
-            scanner.nextLine();
-            if (montoRecibido >= montoAPagar) {
-                System.out.println("Cambio a devolver: $" + (montoRecibido - montoAPagar));
-                mesas[pedido.getNumMesa()].setEstado("libre");
-                mesas[pedido.getNumMesa()].setServicio("ninguno");
-                pedidosPendientesPagos.remove(pedido);
-            } else {
-                System.out.println("Monto insuficiente. El pago no se realizó.");
-            }
-            break;
-        }
-    }
-
-    if (!mesaEncontrada) {
-        System.out.println("Mesa no encontrada o no tiene servicio 'servida'.");
-    }
-    scanner.close();
-}
-
-private double calcularMontoAPagar(List<String> platosPedido, Platos[] platos) {
-    double montoAPagar = 0;
-    for (String platoPedido : platosPedido) {
-        for (Platos plato : platos) {
-            if (plato.getDescripcion().equals(platoPedido)) {
-                montoAPagar += plato.getPrecio();
+        for (Mesa mesa : mesas) {
+            if (mesa.getServicio().equals("servida")) {
+                System.out.println("Mesa " + mesa.getNumMesa());
             }
         }
+
+        System.out.println("Ingrese el número de mesa para realizar el pago:");
+        int numeroMesa = scanner.nextInt();
+        scanner.nextLine();
+        boolean mesaEncontrada = false;
+
+        for (Pedido pedido : pedidosPendientesPagos) {
+            if (pedido.getNumMesa() == numeroMesa) {
+                mesaEncontrada = true;
+                double montoAPagar = calcularMontoAPagar(pedido.getPlatos(), platos);
+                Boleta boleta = new Boleta(pedido.getNumeroPedido(), numeroMesa, montoAPagar);
+                pagosRecibidos.push(boleta);
+                System.out.println("Monto a pagar por la mesa " + numeroMesa + ": $" + montoAPagar);
+                System.out.println("Ingrese el monto recibido: $");
+                double montoRecibido = scanner.nextDouble();
+                scanner.nextLine();
+                if (montoRecibido >= montoAPagar) {
+                    System.out.println("Cambio a devolver: $" + (montoRecibido - montoAPagar));
+                    mesas[pedido.getNumMesa()].setEstado("libre");
+                    mesas[pedido.getNumMesa()].setServicio("ninguno");
+                    pedidosPendientesPagos.remove(pedido);
+                } else {
+                    System.out.println("Monto insuficiente. El pago no se realizó.");
+                }
+                break;
+            }
+        }
+
+        if (!mesaEncontrada) {
+            System.out.println("Mesa no encontrada o no tiene servicio 'servida'.");
+        }
+        scanner.close();
     }
-    return montoAPagar;
+
+    private double calcularMontoAPagar(List<String> platosPedido, Platos[] platos) {
+        double montoAPagar = 0;
+        for (String platoPedido : platosPedido) {
+            for (Platos plato : platos) {
+                if (plato.getDescripcion().equals(platoPedido)) {
+                    montoAPagar += plato.getPrecio();
+                }
+            }
+        }
+        return montoAPagar;
+    }
+
+    public void controlIngresos(Stack<Boleta> pagosRecibidos){
+        int gananciaTotal = 0;
+        for (int i= 0; i < pagosRecibidos.size(); i++){
+            Boleta boleta = pagosRecibidos.pop();
+            gananciaTotal += boleta.getMontoAPagar();
+        }
+        System.out.println("Total de ganancias del dia: "+ gananciaTotal);
+    }
 }
