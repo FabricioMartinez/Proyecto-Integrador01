@@ -22,6 +22,7 @@ public class Restaurante {
         Queue<Pedido> pedidosEnEspera = new ArrayDeque<>();
         Queue<Pedido> pedidosPreparacion = new ArrayDeque<>();
         Stack<Boleta> pagosRecibidos = new Stack<>();
+        ArrayList<Pedido> pedidosPendientesPago = new ArrayList<>();
         for (int i = 0; i < numMesa; i++) {
             if (i < numMesa * 0.3) {
                 mesas[i] = new Mesa(i + 1, 2);
@@ -99,7 +100,8 @@ public class Restaurante {
                 case 7:
                     restaurante.prepararPedidos(pedidosEnEspera, pedidosPreparacion);
                     break;
-                    
+                case 8:
+                    restaurante.entregarPedidos(mesas, pedidosPreparacion, pedidosPendientesPago);
                     break;
                 case 11:
                     elegir = false;
@@ -247,24 +249,31 @@ public class Restaurante {
             }
         }
         // Crea el pedido
-        Pedido nuevoPedido = new Pedido(pedidoActual, numMesa, ordenDePlatos, "espera");
+        Pedido nuevoPedido = new Pedido(pedidoActual, numeroMesa, ordenDePlatos, "espera");
         pedidoActual++;
         pedidosEnEspera.add(nuevoPedido);
         scanner.close();
     }
-}
+    
+    
+    
+    //prepararPedidos
+    public void prepararPedidos(Queue<Pedido> pedidosEnEspera, Queue<Pedido> pedidosPreparacion) {
+        int maxPedidosAProcesar = Math.min(5, pedidosEnEspera.size());
 
+        for (int i = 0; i < maxPedidosAProcesar; i++) {
+            Pedido pedido = pedidosEnEspera.poll(); 
+            pedido.setEstado("Preparando");
+            pedidosPreparacion.offer(pedido); 
+        }
 
-//prepararPedidos
-public void prepararPedidos(Queue<Pedido> pedidosEnEspera, Queue<Pedido> pedidosPreparacion) {
-    int maxPedidosAProcesar = Math.min(5, pedidosEnEspera.size());
-
-    for (int i = 0; i < maxPedidosAProcesar; i++) {
-        Pedido pedido = pedidosEnEspera.poll(); 
-        pedido.setEstado("Preparando");
-        pedidosPreparacion.offer(pedido); 
+        System.out.println("Se han preparado " + maxPedidosAProcesar + " pedidos.");
     }
-
-    System.out.println("Se han preparado " + maxPedidosAProcesar + " pedidos.");
+    public void entregarPedidos(Mesa[] mesas, Queue<Pedido> pedidosPreparacion, ArrayList<Pedido> pedidosPendientesPagos){
+        Pedido pedido = pedidosPreparacion.poll();
+        pedido.setEstado("servido");
+        mesas[pedido.getNumMesa()].setServicio("servida");
+        pedidosPendientesPagos.add(pedido);
+    }
 }
 
