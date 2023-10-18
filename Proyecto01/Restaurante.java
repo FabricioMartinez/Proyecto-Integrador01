@@ -277,3 +277,47 @@ public class Restaurante {
     }
 }
 
+
+public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<Pedido> pedidosPendientesPagos) {
+    Scanner scanner = new Scanner(System.in);
+
+    System.out.println("Mesas para realizar el pago:");
+
+    for (Mesa mesa : mesas) {
+        if (mesa.getServicio().equals("servida")) {
+            System.out.println("Mesa " + mesa.getNumMesa());
+        }
+    }
+
+    System.out.println("Ingrese el número de mesa para realizar el pago:");
+    int numeroMesa = scanner.nextInt();
+    scanner.nextLine();
+    boolean mesaEncontrada = false;
+
+    for (Pedido pedido : pedidosPendientesPagos) {
+        if (pedido.getNumMesa() == numeroMesa) {
+            mesaEncontrada = true;
+            double montoAPagar = calcularMontoAPagar(pedido.getPlatos(), platos);
+            Boleta boleta = new Boleta(pedido.getNumeroPedido(), numeroMesa, montoAPagar);
+            pagosRecibidos.push(boleta);
+            System.out.println("Monto a pagar por la mesa " + numeroMesa + ": $" + montoAPagar);
+            System.out.println("Ingrese el monto recibido: $");
+            double montoRecibido = scanner.nextDouble();
+            scanner.nextLine();
+            if (montoRecibido >= montoAPagar) {
+                System.out.println("Cambio a devolver: $" + (montoRecibido - montoAPagar));
+                mesas[pedido.getNumMesa()].setEstado("libre");
+                mesas[pedido.getNumMesa()].setServicio("ninguno");
+                pedidosPendientesPagos.remove(pedido);
+            } else {
+                System.out.println("Monto insuficiente. El pago no se realizó.");
+            }
+            break;
+        }
+    }
+
+    if (!mesaEncontrada) {
+        System.out.println("Mesa no encontrada o no tiene servicio 'servida'.");
+    }
+    scanner.close();
+}
