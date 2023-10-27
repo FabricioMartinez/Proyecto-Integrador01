@@ -112,6 +112,7 @@ public class Restaurante {
             String name = scanner.nextLine();
             System.out.println("Ingresar precio del plato: ");
             double price = scanner.nextDouble();
+            scanner.nextLine();
             platos[i] = new Platos(i + 1, name, price);
         }
         for (Platos plato : platos) {
