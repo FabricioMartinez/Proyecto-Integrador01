@@ -8,51 +8,24 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 
 public class Restaurante {
-
-
     public static void main(String[] args) {
         Restaurante restaurante = new Restaurante();
         Scanner scanner = new Scanner(System.in);
+        System.out.println("--------Iniciando programa--------");
         System.out.println("Ingresar el número de mesas del restaurante: ");
         int numMesa = scanner.nextInt();
         scanner.nextLine();
         Mesa[] mesas = new Mesa[numMesa];
+        restaurante.registrarYMostrarMesas(numMesa, mesas);
         Queue<Pedido> pedidosEnEspera = new ArrayDeque<>();
         Queue<Pedido> pedidosPreparacion = new ArrayDeque<>();
         Stack<Boleta> pagosRecibidos = new Stack<>();
         ArrayList<Pedido> pedidosPendientesPago = new ArrayList<>();
-        for (int i = 0; i < numMesa; i++) {
-            if (i < numMesa * 0.3) {
-                mesas[i] = new Mesa(i + 1, 2);
-            } else {
-                mesas[i] = new Mesa(i + 1, 4);
-            }
-        }
         System.out.println("Ingrese la cantidad de platos disponibles: ");
         int numPlatos = scanner.nextInt();
         Platos[] platos = new Platos[numPlatos];
-
-        for (int i = 0; i < numPlatos; i++) {
-            System.out.println("Ingresar nombre del plato: ");
-            String name = scanner.next();
-            System.out.println("Ingresar precio del plato: ");
-            double price = scanner.nextDouble();
-            platos[i] = new Platos(i + 1, name, price);
-        }
-        for (Platos plato : platos) {
-            System.out.println(plato);
-        }
-
-        System.out.println("Ingrese el numero actual de clientes en espera.");
-        int clientesEnEspera = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Ingrese el numero actual de clientes atendidos.");
-        int clientesAtendidos = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Ingrese el numero actual de clientes servidos.");
-        int clientesServidos = scanner.nextInt();
-        scanner.nextLine();
-        Clientes clientes = new Clientes(clientesEnEspera, clientesAtendidos, clientesServidos);
+        restaurante.registrarYMostrarPlatos(numPlatos, platos);
+        Clientes clientes = new Clientes();
         int pedidoActual = 1;
         boolean elegir = true;
         while (elegir) {
@@ -119,8 +92,35 @@ public class Restaurante {
         scanner.close();
     }
 
+    public void registrarYMostrarMesas(int numMesa, Mesa[] mesas){
+        for (int i = 0; i < numMesa; i++) {
+            if (i < numMesa * 0.3) {
+                mesas[i] = new Mesa(i + 1, 2);
+            } else {
+                mesas[i] = new Mesa(i + 1, 4);
+            }
+        }
+        for (Mesa mesa : mesas){
+            System.out.println(mesa);
+        }
+    }
+
+    public void registrarYMostrarPlatos(int numPlatos, Platos[] platos){
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < numPlatos; i++) {
+            System.out.println("Ingresar nombre del plato: ");
+            String name = scanner.next();
+            System.out.println("Ingresar precio del plato: ");
+            double price = scanner.nextDouble();
+            platos[i] = new Platos(i + 1, name, price);
+        }
+        for (Platos plato : platos) {
+            System.out.println(plato);
+        }
+    }
+
     public void consultarMesaDisponibles(Mesa[] mesas) {
-        System.out.println("Mesas disponibles:");
+        System.out.println("----Mesas disponibles----");
 
         for (Mesa mesa : mesas) {
             if (mesa.getEstado().equals("libre")) {
@@ -130,11 +130,11 @@ public class Restaurante {
     }
 
     public void consultarMesaOcupada(Mesa[] mesas) {
-        System.out.println("Mesas ocupadas:");
+        System.out.println("----Mesas ocupadas----");
 
         for (Mesa mesa : mesas) {
             if (mesa.getEstado().equals("ocupada")) {
-                System.out.println("Mesa " + mesa.getNumMesa() + ": Comensales " + mesa.getComensales());
+                System.out.println("Mesa " + mesa.getNumMesa() + ": Comensales " + mesa.getComensales() + "Servicio: " + mesa.getServicio());
             }
         }
     }
@@ -144,28 +144,48 @@ public class Restaurante {
         System.out.println("Ingresa número de mesa: ");
         int numerodeMesa = scanner.nextInt();
         scanner.nextLine();
-        
-
-        for (int i = 0; i < numMesa; i++) {
-            if (mesas[i].getNumMesa() == numerodeMesa){
-                if (mesas[i].getEstado().equals("ocupada")){
-                    System.out.println("Capacidad: "+ mesas[i].getCapacidad()+ ", estado: "+ mesas[i].getEstado()+ ", servicio: "+ mesas[i].getServicio()+", comensales: "+mesas[i].getComensales()) ;
-                    break;
-                }else{
-                    System.out.println("Capacidad: "+ mesas[i].getCapacidad()+ ", estado: "+ mesas[i].getEstado());
-                    break;
-                }  
-            }
+        while (numerodeMesa > numMesa || numerodeMesa <= 0) {
+            System.out.println("El numero de mesa que ingreso no es valido o no existe, por favor ingrese un numero valido.");
+            System.out.println("Ingresa número de mesa: ");
+            numerodeMesa = scanner.nextInt();
+            scanner.nextLine();
         }
-        
-
+        for (int i = 0; i < numMesa; i++) {
+        if (mesas[i].getNumMesa() == numerodeMesa){
+            if (mesas[i].getEstado().equals("ocupada")){
+                System.out.println("Capacidad: "+ mesas[i].getCapacidad()+ ", estado: "+ mesas[i].getEstado()+ ", servicio: "+ mesas[i].getServicio()+", comensales: "+mesas[i].getComensales()) ;
+                break;
+            }else{
+                System.out.println("Capacidad: "+ mesas[i].getCapacidad()+ ", estado: "+ mesas[i].getEstado());
+                break;
+            }  
+        }
+        }
     }
 
     public void consultaDeClientes(Clientes clientes) {
-        System.out.println("Total de clientes en espera: " + clientes.getTotalEspera());
-        System.out.println("Total de clientes atendidos: " + clientes.getTotalAtendidos());
-        System.out.println("Total de clientes servidos: " + clientes.getTotalServidos());
-        System.out.println("Total de clientes en el restaurante: " + consultarTotalClientes(clientes));
+        Scanner scanner = new Scanner(System.in);
+        if (clientes.getTotalAtendidos() == 0 && clientes.getTotalEspera() == 0 && clientes.getTotalServidos() == 0){
+            System.out.println("Actualmente no se registraron clientes. Si acaba de empezar la jornada, por favor registre la cantidad actual de clientes.");
+            System.out.println("Ingrese el numero actual de clientes en espera.");
+            int clientesEnEspera = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Ingrese el numero actual de clientes atendidos.");
+            int clientesAtendidos = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("Ingrese el numero actual de clientes servidos.");
+            int clientesServidos = scanner.nextInt();
+            scanner.nextLine();
+            clientes.setTotalEspera(clientesEnEspera);
+            clientes.setTotalAtendidos(clientesAtendidos);
+            clientes.setTotalServidos(clientesServidos);
+        }else{
+            System.out.println("Total de clientes en espera: " + clientes.getTotalEspera());
+            System.out.println("Total de clientes atendidos: " + clientes.getTotalAtendidos());
+            System.out.println("Total de clientes servidos: " + clientes.getTotalServidos());
+            System.out.println("Total de clientes en el restaurante: " + consultarTotalClientes(clientes));
+        }
+        
     }
 
     public int consultarTotalClientes(Clientes clientes) {
@@ -185,6 +205,8 @@ public class Restaurante {
         clientes.setTotalEspera(clientesEnEspera);
         clientes.setTotalAtendidos(clientesAtendidos);
         clientes.setTotalServidos(clientesServidos);
+        System.out.println("La cantidad de clientes ha sido actualizada.");
+        
     }
 
     public void OcuparMesa(int numMesa, Mesa[] mesas) {
@@ -207,7 +229,7 @@ public class Restaurante {
         } else {
             System.out.println("No hay mesas disponibles.");
         }
-
+        
     }
 
 
@@ -224,21 +246,16 @@ public class Restaurante {
             System.out.println("No hay mesas ocupadas para tomar pedidos.");
         }
 
-        // Mostrar el menú de platos
         System.out.println("Menú de Platos:");
         for (Platos plato : platos) {
             System.out.println(plato.getCodigoPlato() + ". " + plato.getDescripcion() + " - Precio: " + plato.getPrecio());
         }
 
-        // Obtener el número de mesa
         System.out.println("Ingrese el número de mesa para el pedido:");
         int numeroMesa = scanner.nextInt();
         scanner.nextLine();
-
-        // Crear la lista de los platos a elegir
         ArrayList<String> ordenDePlatos = new ArrayList<String>();
 
-        // Elegir platos para el pedido
         System.out.println("Seleccione hasta 4 platos ingresando sus números (0 para finalizar):");
         int platoSeleccionado;
         int contadorPlatos = 0;
@@ -259,16 +276,12 @@ public class Restaurante {
 
             }
         }
-        // Crea el pedido
         Pedido nuevoPedido = new Pedido(pedidoActual, numeroMesa, ordenDePlatos, "espera");
         pedidoActual++;
         pedidosEnEspera.add(nuevoPedido);
- 
+        System.out.println("El pedido para la mesa "+ numeroMesa + " ha sido creado.");
     }
     
-    
-    
-    //prepararPedidos
     public void prepararPedidos(Queue<Pedido> pedidosEnEspera, Queue<Pedido> pedidosPreparacion) {
         int maxPedidosAProcesar = Math.min(5, pedidosEnEspera.size());
 
@@ -289,10 +302,6 @@ public class Restaurante {
     }
 
 
-
-//PAGO DE CONSUMO
-
-
     public void pagoDeConsumo(Mesa[] mesas, Stack<Boleta> pagosRecibidos, ArrayList<Pedido> pedidosPendientesPagos, Platos[] platos) {
         Scanner scanner = new Scanner(System.in);
 
@@ -307,7 +316,6 @@ public class Restaurante {
         System.out.println("Ingrese el número de mesa para realizar el pago:");
         int numeroMesa = scanner.nextInt();
         scanner.nextLine();
-        System.out.println(numeroMesa);
         boolean mesaEncontrada = false;
 
         for (Pedido pedido : pedidosPendientesPagos) {
@@ -335,7 +343,6 @@ public class Restaurante {
         if (!mesaEncontrada) {
             System.out.println("Mesa no encontrada o no tiene servicio 'servida'.");
         }
-
     }
 
     private double calcularMontoAPagar(List<String> platosPedido, Platos[] platos) {

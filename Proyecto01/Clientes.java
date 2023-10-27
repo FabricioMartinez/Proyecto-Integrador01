@@ -7,9 +7,9 @@ public class Clientes {
     
     
     public Clientes(int totalEspera, int totalAtendidos, int totalSevidos) {
-        this.totalEspera = totalEspera;
-        this.totalAtendidos = totalAtendidos;
-        this.totalServidos = totalSevidos;
+        this.totalEspera = 0;
+        this.totalAtendidos = 0;
+        this.totalServidos = 0;
     }
     public Clientes(){
 
