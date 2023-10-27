@@ -331,8 +331,8 @@ public class Restaurante {
                 scanner.nextLine();
                 if (montoRecibido >= montoAPagar) {
                     System.out.println("Cambio a devolver: $" + (montoRecibido - montoAPagar));
-                    mesas[pedido.getNumMesa()].setEstado("libre");
-                    mesas[pedido.getNumMesa()].setServicio("ninguno");
+                    mesas[pedido.getNumMesa() - 1].setEstado("libre");
+                    mesas[pedido.getNumMesa() - 1].setServicio("ninguno");
                     pedidosPendientesPagos.remove(pedido);
                 } else {
                     System.out.println("Monto insuficiente. El pago no se realizó.");
