@@ -109,7 +109,7 @@ public class Restaurante {
         Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < numPlatos; i++) {
             System.out.println("Ingresar nombre del plato: ");
-            String name = scanner.next();
+            String name = scanner.nextLine();
             System.out.println("Ingresar precio del plato: ");
             double price = scanner.nextDouble();
             platos[i] = new Platos(i + 1, name, price);
