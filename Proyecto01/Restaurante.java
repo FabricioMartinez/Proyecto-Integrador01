@@ -219,11 +219,11 @@ public class Restaurante {
             System.out.println("¿Cuál mesa desea ocupar?");
             int elegirMesa = scanner.nextInt();
             scanner.nextLine();
-            if (mesas[elegirMesa].getCapacidad() >= numComensales && mesas[elegirMesa].getEstado().equals("libre")) {
-                mesas[elegirMesa].setEstado("ocupada");
-                mesas[elegirMesa].setServicio("espera");
-                mesas[elegirMesa].setComensales(numComensales);
-                System.out.println("Ahora la mesa " + mesas[elegirMesa-1].getNumMesa()+ " esta ocupada y esperando a ser atendida.");
+            if (mesas[elegirMesa - 1].getCapacidad() >= numComensales && mesas[elegirMesa - 1].getEstado().equals("libre")) {
+                mesas[elegirMesa - 1].setEstado("ocupada");
+                mesas[elegirMesa - 1].setServicio("espera");
+                mesas[elegirMesa - 1].setComensales(numComensales);
+                System.out.println("Ahora la mesa " + mesas[elegirMesa - 1].getNumMesa()+ " esta ocupada y esperando a ser atendida.");
             } else {
                 System.out.println("Esa mesa no esta disponible.");
             }

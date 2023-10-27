@@ -6,9 +6,11 @@ public class Consultas {
 
     static int MesasDisponibles(int numMesa, Mesa[] mesas){           
         int mesasLibres = 0;    
-        for (int i = 0; i < numMesa; i++){
-            if (mesas[i].getEstado().equals("libre")){
-                System.out.println(mesas[i]);
+        System.out.println("----Mesas disponibles----");
+
+        for (Mesa mesa : mesas) {
+            if (mesa.getEstado().equals("libre")) {
+                System.out.println("Mesa " + mesa.getNumMesa() + ": Capacidad " + mesa.getCapacidad());
                 mesasLibres++;
             }
         }return mesasLibres;
