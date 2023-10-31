@@ -219,7 +219,7 @@ public class Restaurante {
             System.out.println("¿Cuál mesa desea ocupar?");
             int elegirMesa = scanner.nextInt();
             scanner.nextLine();
-            if (mesas[elegirMesa - 1].getCapacidad() >= numComensales && mesas[elegirMesa - 1].getEstado().equals("libre")) {
+            if (mesas[elegirMesa - 1].getCapacidad() >= numComensales && mesas[elegirMesa - 1].getEstado().equals("libre") && numComensales > (mesas[elegirMesa - 1].getCapacidad()/2)) {
                 mesas[elegirMesa - 1].setEstado("ocupada");
                 mesas[elegirMesa - 1].setServicio("espera");
                 mesas[elegirMesa - 1].setComensales(numComensales);
