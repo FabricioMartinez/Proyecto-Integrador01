@@ -236,17 +236,6 @@ public class Restaurante {
 
     public void altaDePedido(Mesa[] mesas, Platos[] platos, int pedidoActual, int numMesa, Queue<Pedido> pedidosEnEspera) {
         Scanner scanner = new Scanner(System.in);
-        List<Mesa> mesasOcupadas = new ArrayList<>();
-        for (Mesa mesa : mesas) {
-            if (mesa.getEstado().equals("ocupada")) {
-                mesasOcupadas.add(mesa);
-            }
-        }
-
-        if (mesasOcupadas.isEmpty()) {
-            System.out.println("No hay mesas ocupadas para tomar pedidos.");
-        }
-
         System.out.println("Menú de Platos:");
         for (Platos plato : platos) {
             System.out.println(plato.getCodigoPlato() + ". " + plato.getDescripcion() + " - Precio: " + plato.getPrecio());
