@@ -236,40 +236,45 @@ public class Restaurante {
 
     public void altaDePedido(Mesa[] mesas, Platos[] platos, int pedidoActual, int numMesa, Queue<Pedido> pedidosEnEspera) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Menú de Platos:");
-        for (Platos plato : platos) {
+        if (Consultas.MesasOcupadas(numMesa, mesas) != 0){
+            System.out.println("Menú de Platos:");
+            for (Platos plato : platos) {
             System.out.println(plato.getCodigoPlato() + ". " + plato.getDescripcion() + " - Precio: " + plato.getPrecio());
-        }
-
-        System.out.println("Ingrese el número de mesa para el pedido:");
-        int numeroMesa = scanner.nextInt();
-        scanner.nextLine();
-        ArrayList<String> ordenDePlatos = new ArrayList<String>();
-
-        System.out.println("Seleccione hasta 4 platos ingresando sus números (0 para finalizar):");
-        int platoSeleccionado;
-        int contadorPlatos = 0;
-
-        while (contadorPlatos < 5) {
-            platoSeleccionado = scanner.nextInt();
-            scanner.nextLine();
-            if (platoSeleccionado == 0) {
-                break;
-            } else {
-                for (Platos plato : platos) {
-                    if (plato.getCodigoPlato() == platoSeleccionado) {
-                        ordenDePlatos.add(plato.getDescripcion());
-                        break;
-                    }
-                    contadorPlatos++;
-                }
-
             }
+
+            System.out.println("Ingrese el número de mesa para el pedido:");
+            int numeroMesa = scanner.nextInt();
+            scanner.nextLine();
+            ArrayList<String> ordenDePlatos = new ArrayList<String>();
+
+            System.out.println("Seleccione hasta 4 platos ingresando sus números (0 para finalizar):");
+            int platoSeleccionado;
+            int contadorPlatos = 0;
+
+            while (contadorPlatos < 5) {
+                platoSeleccionado = scanner.nextInt();
+                scanner.nextLine();
+                if (platoSeleccionado == 0) {
+                    break;
+                } else {
+                    for (Platos plato : platos) {
+                        if (plato.getCodigoPlato() == platoSeleccionado) {
+                            ordenDePlatos.add(plato.getDescripcion());
+                            break;
+                        }
+                        contadorPlatos++;
+                    }
+
+                }
+            }
+            Pedido nuevoPedido = new Pedido(pedidoActual, numeroMesa, ordenDePlatos, "espera");
+            pedidoActual++;
+            pedidosEnEspera.add(nuevoPedido);
+            System.out.println("El pedido para la mesa "+ numeroMesa + " ha sido creado.");
+        }else{
+            System.out.println("No hay mesas ocupadas actualmente.");
         }
-        Pedido nuevoPedido = new Pedido(pedidoActual, numeroMesa, ordenDePlatos, "espera");
-        pedidoActual++;
-        pedidosEnEspera.add(nuevoPedido);
-        System.out.println("El pedido para la mesa "+ numeroMesa + " ha sido creado.");
+        
     }
     
     public void prepararPedidos(Queue<Pedido> pedidosEnEspera, Queue<Pedido> pedidosPreparacion) {
